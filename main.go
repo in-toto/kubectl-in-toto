@@ -1,6 +1,8 @@
 package main
 
 import (
+	//"bufio"
+	//"bytes"
 	"flag"
 	"fmt"
 	"os"
@@ -9,7 +11,9 @@ import (
 	_ "github.com/golang/glog"
 	"github.com/santiagotorres/kubectl-in-toto/pkg/in_toto"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	//kjson "k8s.io/apimachinery/pkg/runtime/serializer/json"
 	"k8s.io/client-go/kubernetes"
+	//"k8s.io/client-go/kubernetes/scheme"
 	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 	"k8s.io/kubectl/pkg/pluginutils"
 )
@@ -53,7 +57,7 @@ func main() {
     }
     for i := range pod.Spec.Containers {
         fmt.Printf("%v", pod.Spec.Containers[i].Image);
-        result, _ := in_toto.NewClient().ScanContainer()
+        result, _ := in_toto.NewClient().ScanContainer(pod.Spec.Containers[i].Image)
 	    result.Dump(os.Stdout)
     }
 }

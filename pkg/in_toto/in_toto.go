@@ -1,14 +1,10 @@
 package in_toto
 
 import (
-	//"bytes"
-	//"encoding/json"
-	//"errors"
 	"fmt"
 	"io"
-	//"io/ioutil"
-	//"mime/multipart"
-	//"net/http"
+    "os/exec"
+    "os"
 )
 
 // in_totoClient represent a client for kubesec.io.
@@ -20,14 +16,27 @@ func NewClient() *in_totoClient {
 	return &in_totoClient{}
 }
 
+// FIXME: actually return an error
 // ScanDefinition scans the provided resource definition.
-func (kc *in_totoClient) ScanContainer() (*inTotoResult, error) {
+func (kc *in_totoClient) ScanContainer(imageName string) (*inTotoResult, error) {
 
     result := inTotoResult{
-        Error: "error",
         Retval: 0,
+        Error: "success",
     }
 
+    err := os.Chdir(imageName)
+    if err != nil {
+        result.Retval = 128
+        result.Error = "Couldn't change directory"
+    }
+
+    cmd := exec.Command("in-toto-verify", "-k", "root.key", "-l", "root.layout")
+    _, err = cmd.CombinedOutput()
+    if err != nil {
+        result.Retval = 127
+        result.Error = err.Error();
+    }
 	return &result, nil
 }
 
