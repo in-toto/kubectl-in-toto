@@ -3,8 +3,8 @@ package in_toto
 import (
 	"fmt"
 	"io"
-    "os/exec"
-    "os"
+	"os"
+	"os/exec"
 )
 
 // in_totoClient represent a client for kubesec.io.
@@ -20,30 +20,30 @@ func NewClient() *in_totoClient {
 // ScanDefinition scans the provided resource definition.
 func (kc *in_totoClient) ScanContainer(imageName string) (*inTotoResult, error) {
 
-    result := inTotoResult{
-        Retval: 0,
-        Error: "success",
-    }
+	result := inTotoResult{
+		Retval: 0,
+		Error:  "success",
+	}
 
-    err := os.Chdir(imageName)
-    if err != nil {
-        result.Retval = 128
-        result.Error = "Couldn't change directory"
-    }
+	err := os.Chdir(imageName)
+	if err != nil {
+		result.Retval = 128
+		result.Error = "Couldn't change directory"
+	}
 
-    cmd := exec.Command("in-toto-verify", "-k", "root.key", "-l", "root.layout")
-    _, err = cmd.CombinedOutput()
-    if err != nil {
-        result.Retval = 127
-        result.Error = err.Error();
-    }
+	cmd := exec.Command("in-toto-verify", "-v", "-k", "root_key.pub", "-l", "root.layout")
+	_, err = cmd.CombinedOutput()
+	if err != nil {
+		result.Retval = 127
+		result.Error = err.Error()
+	}
 	return &result, nil
 }
 
 // inTotoResult represents a result returned by kubesec.io.
 type inTotoResult struct {
-	Error   string `json:"error"`
-	Retval  int    `json:"score"`
+	Error  string `json:"error"`
+	Retval int    `json:"score"`
 }
 
 // Dump writes the result in a human-readable format to the specified writer.
