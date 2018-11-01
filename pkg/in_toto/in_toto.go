@@ -25,17 +25,27 @@ func (kc *in_totoClient) ScanContainer(imageName string) (*inTotoResult, error) 
 		Error:  "success",
 	}
 
-	err := os.Chdir(imageName)
-	if err != nil {
-		result.Retval = 128
-		result.Error = "Couldn't change directory"
-	}
+	oldWd, err := os.Getwd()
+	if err == nil {
 
-	cmd := exec.Command("in-toto-verify", "-v", "-k", "root_key.pub", "-l", "root.layout")
-	_, err = cmd.CombinedOutput()
-	if err != nil {
-		result.Retval = 127
-		result.Error = err.Error()
+		err := os.Chdir(imageName)
+		if err != nil {
+			result.Retval = 128
+			result.Error = "Couldn't change directory"
+		}
+
+		cmd := exec.Command("in-toto-verify", "-v", "-k", "root_key.pub", "-l", "root.layout")
+		_, err = cmd.CombinedOutput()
+		if err != nil {
+			result.Retval = 127
+			result.Error = err.Error()
+		}
+
+		err = os.Chdir(oldWd)
+		if err != nil {
+			result.Retval = 128
+			result.Error = "Couldn't change to old directory"
+		}
 	}
 	return &result, nil
 }
