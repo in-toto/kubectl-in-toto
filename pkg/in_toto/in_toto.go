@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"github.com/in-toto/in-toto-golang/in_toto"
 )
 
 // in_totoClient represent a client for kubesec.io.
@@ -34,9 +35,21 @@ func (kc *in_totoClient) ScanContainer(imageName string) (*inTotoResult, error) 
 			result.Error = "Couldn't change directory"
 		}
 
-		cmd := exec.Command("in-toto-verify", "-v", "-k", "root_key.pub", "-l", "root.layout")
-		_, err = cmd.CombinedOutput()
-		if err != nil {
+		layoutPath := "root.layout"
+		keyPath := "root_key.pub"
+		linkDir := "./"
+
+		var key in_toto.Key
+		if err := key.LoadPublicKey(keyPath); err != nil {
+			result.Retval = 127 // is this return value correct for this error?
+			result.Error = err.Error()
+		}
+
+		var keyMap = map[string]in_toto.Key {
+			key.KeyId: key,
+		}
+
+		if err := in_toto.InTotoVerify(layoutPath, keyMap, linkDir); err != nil {
 			result.Retval = 127
 			result.Error = err.Error()
 		}
