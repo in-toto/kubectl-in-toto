@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"os/exec"
 	"github.com/in-toto/in-toto-golang/in_toto"
 )
 
