@@ -97,14 +97,6 @@
   version = "1.0.0"
 
 [[projects]]
-  branch = "master"
-  digest = "1:f445c0e579fb6b0de6ee55238007a0473e7588399b3f512779010a5d3f41ecf7"
-  name = "github.com/santiagotorres/kubectl-in-toto"
-  packages = ["pkg/in_toto"]
-  pruneopts = "UT"
-  revision = "e244d62388201fc18e04a1d131ff08e019ba07de"
-
-[[projects]]
   digest = "1:9424f440bba8f7508b69414634aef3b2b3a877e522d8a4624692412805407bb7"
   name = "github.com/spf13/pflag"
   packages = ["."]
@@ -376,7 +368,6 @@
   analyzer-version = 1
   input-imports = [
     "github.com/golang/glog",
-    "github.com/santiagotorres/kubectl-in-toto/pkg/in_toto",
     "k8s.io/apimachinery/pkg/apis/meta/v1",
     "k8s.io/client-go/kubernetes",
     "k8s.io/client-go/plugin/pkg/client/auth/gcp",
