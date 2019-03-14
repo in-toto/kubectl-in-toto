@@ -46,16 +46,16 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
-    }
-    pod.TypeMeta = metav1.TypeMeta{
-        Kind:       "Pod",
-        APIVersion: "v1",
-    }
-    for i := range pod.Spec.Containers {
-        fmt.Printf("%v", pod.Spec.Containers[i].Image);
-        result, _ := in_toto.NewClient().ScanContainer(pod.Spec.Containers[i].Image)
-	    result.Dump(os.Stdout)
-    }
+	}
+	pod.TypeMeta = metav1.TypeMeta{
+		Kind:       "Pod",
+		APIVersion: "v1",
+	}
+	for i := range pod.Spec.Containers {
+		fmt.Printf("%v", pod.Spec.Containers[i].Image)
+		result, _ := in_toto.NewClient().ScanContainer(pod.Spec.Containers[i].Image)
+		result.Dump(os.Stdout)
+	}
 }
 
 func loadConfig() (*kubernetes.Clientset, string) {

@@ -2,9 +2,9 @@ package in_toto
 
 import (
 	"fmt"
+	"github.com/in-toto/in-toto-golang/in_toto"
 	"io"
 	"os"
-	"github.com/in-toto/in-toto-golang/in_toto"
 )
 
 // in_totoClient represent a client for kubesec.io.
@@ -44,11 +44,19 @@ func (kc *in_totoClient) ScanContainer(imageName string) (*inTotoResult, error) 
 			result.Error = err.Error()
 		}
 
-		var keyMap = map[string]in_toto.Key {
+		var keyMap = map[string]in_toto.Key{
 			key.KeyId: key,
 		}
 
-		if err := in_toto.InTotoVerify(layoutPath, keyMap, linkDir); err != nil {
+		var layout in_toto.Metablock
+		err = layout.Load(layoutPath)
+
+		if err != nil {
+			result.Retval = 128
+			result.Error = "Could not load in-toto layout"
+		}
+
+		if _, err = in_toto.InTotoVerify(layout, keyMap, linkDir, "toplevel"); err != nil {
 			result.Retval = 127
 			result.Error = err.Error()
 		}
