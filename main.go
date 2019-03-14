@@ -1,8 +1,6 @@
 package main
 
 import (
-	//"bufio"
-	//"bytes"
 	"flag"
 	"fmt"
 	"os"
@@ -11,9 +9,7 @@ import (
 	_ "github.com/golang/glog"
 	"github.com/santiagotorres/kubectl-in-toto/pkg/in_toto"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	//kjson "k8s.io/apimachinery/pkg/runtime/serializer/json"
 	"k8s.io/client-go/kubernetes"
-	//"k8s.io/client-go/kubernetes/scheme"
 	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 	"k8s.io/kubectl/pkg/pluginutils"
 )
@@ -24,7 +20,7 @@ func init() {
 }
 
 const (
-	usage   = "usage: kubectl plugin scan [pod|deployment|statefulset|daemonset]/name"
+	usage   = "usage: kubectl in-toto [pod|deployment|statefulset|daemonset]/name"
 	unknown = "unknown type must be pod, deployment, statefulset or daemonset"
 )
 
