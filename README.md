@@ -5,12 +5,16 @@ kubernetes pods.
 
 ### Install
 
-Run `make` and the plugin will be built and installed  into your .kube/plugins/
-folder
+run `make deploy` and the plugin should be installed to `~/.kube/plugins`. You
+can change the target by changing the KUBEPATH environment variable. For
+example `make deploy KUBEPATH=~/bin` will install it to a user-controlled
+`bin/` folder.
 
 ### Usage
 
-Scan a Pod:
+Make sure the plugin executable was installed to somewhere in your `$PATH`, or
+to add `~/.kube/plugins` to your path. Afterwards, you can use it within
+kubectl:
 
 ```bash
 kubectl plugin in-toto pod/[podname]

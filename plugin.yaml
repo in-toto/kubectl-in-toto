@@ -1,3 +1,0 @@
-name: "in-toto"
-shortDesc: "perform in-toto verification on an existing pod"
-command: "./in-toto"

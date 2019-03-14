@@ -1,7 +1,8 @@
 V?=0
 
+KUBEPATH?=~/.kube/plugins/
+NAME?='kubectl-in_toto'
 deploy:
-	@mkdir -p ~/.kube/plugins/in-toto
-	@go build -o ~/.kube/plugins/in-toto/in-toto
-	@cp plugin.yaml ~/.kube/plugins/in-toto/
-
+	@mkdir -vp $(KUBEPATH)
+	@go build -o $(KUBEPATH)/$(NAME)
+	echo plugin installed on $(KUBEPATH)/$(NAME)
