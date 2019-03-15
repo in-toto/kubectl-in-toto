@@ -6,3 +6,6 @@ deploy:
 	@mkdir -vp $(KUBEPATH)
 	@go build -o $(KUBEPATH)/$(NAME)
 	echo plugin installed on $(KUBEPATH)/$(NAME)
+
+test:
+	go test ./...
