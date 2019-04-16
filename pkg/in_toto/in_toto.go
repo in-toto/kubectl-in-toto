@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"strings"
 )
 
 // in_totoClient represent a client for kubesec.io.
@@ -23,28 +24,33 @@ func (kc *in_totoClient) ScanContainer(imageName string) (*inTotoResult, error) 
 	result := inTotoResult{
 		Retval: 0,
 		Error:  "success",
+		Output: "",
 	}
 
 	oldWd, err := os.Getwd()
 	if err == nil {
 
-		err := os.Chdir(imageName)
+		dir := imageName
+		if strings.Contains(dir, ":") {
+			dir = dir[:strings.LastIndexByte(dir, ':')]
+		}
+		err := os.Chdir(dir)
 		if err != nil {
 			result.Retval = 128
 			result.Error = "Couldn't change directory"
-		}
-
-		cmd := exec.Command("in-toto-verify", "-v", "-k", "root_key.pub", "-l", "root.layout")
-		_, err = cmd.CombinedOutput()
-		if err != nil {
-			result.Retval = 127
-			result.Error = err.Error()
-		}
-
-		err = os.Chdir(oldWd)
-		if err != nil {
-			result.Retval = 128
-			result.Error = "Couldn't change to old directory"
+		} else {
+			cmd := exec.Command("in-toto-verify", "-v", "-k", "root_key.pub", "-l", "root.layout")
+			stdoutStderr, execErr := cmd.CombinedOutput()
+			result.Output = fmt.Sprintf("%s", stdoutStderr)
+			if execErr != nil {
+				result.Retval = 127
+				result.Error = execErr.Error()
+			}
+			err = os.Chdir(oldWd)
+			if err != nil {
+				result.Retval = 128
+				result.Error = "Couldn't change to old directory"
+			}
 		}
 	}
 	return &result, nil
@@ -54,6 +60,7 @@ func (kc *in_totoClient) ScanContainer(imageName string) (*inTotoResult, error) 
 type inTotoResult struct {
 	Error  string `json:"error"`
 	Retval int    `json:"score"`
+	Output string `json:"output"`
 }
 
 // Dump writes the result in a human-readable format to the specified writer.
