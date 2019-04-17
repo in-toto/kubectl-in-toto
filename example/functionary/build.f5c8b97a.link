@@ -1,0 +1,33 @@
+{
+ "signatures": [
+  {
+   "keyid": "f5c8b97adb9fc83ab7ee22ff05dd383957008835ba9294e0c073be7c62cdb44e",
+   "sig": "37844c33f2cfbc852b7e93656ae9c80f0472fd747fbbb7d6cb2c95467a638d84cf6478fc5147828af3f4294c64eaf6ff9958c6583bce9eb297bac3b132270a3a7badae52f28a4a2a3405fdb307a17e8593974731803431e495c3ffad2748c2d89d320679cb15209a878b6598123bf547cfaba5823ce8a286a6b2ef7ff0aab65541270e61cddc6a4a7373635331639781e55139b86318d265d84ed4ad9b5d3c3c0880e8f4ef1948ae0e4cc531d5f283d1b2a7c77201e8fb88098e51cf388d14b4a4647d7c10c09691f5414cd258f6eb0c0385d074abe22ec2a8028c8a2e42e001197b18cd774c23eb55830022db5362319d19fb2c68f9b11cae79b441e985034a2fb3265d0e91f8b26ed78d633c200d9ecef9f3891f2b68250583098a044a1762ec12bd0295a82f5008b107e4932e12a283296efc64c1723516b4181bcb0c2bd477780e865d4fe7c5555c5595ffc78c67cfa053dcada219793b6f5b7560e0a5fc70d4de4e4a50dbe308ba071925afee278c65ec54f968ea03369ebf4d81c8102f"
+  }
+ ],
+ "signed": {
+  "_type": "link",
+  "byproducts": {
+   "return-value": 0,
+   "stderr": "",
+   "stdout": ""
+  },
+  "command": [
+   "docker",
+   "build",
+   ".",
+   "-t",
+   "empty:1.0.0",
+   "--iidfile",
+   "image_id"
+  ],
+  "environment": {},
+  "materials": {},
+  "name": "build",
+  "products": {
+   "image_id": {
+    "sha256": "3985e8cd83bc618731b8e8e2f06878b2a2002c2f28dfbd8350e5080cff58a783"
+   }
+  }
+ }
+}
