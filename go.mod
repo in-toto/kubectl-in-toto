@@ -3,11 +3,11 @@ module github.com/in-toto/kubectl-in-toto
 go 1.12
 
 require (
-	cloud.google.com/go v0.0.0-20190311192942-f52f9bc13254
-	github.com/davecgh/go-spew v0.0.0-20180221232628-8991bc29aa16
-	github.com/gogo/protobuf v0.0.0-20190218063003-ba06b47c162d
+	cloud.google.com/go v0.34.0
+	github.com/davecgh/go-spew v1.1.1
+	github.com/gogo/protobuf v1.1.1
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
-	github.com/golang/protobuf v0.0.0-20190228151929-b5d812f8a370
+	github.com/golang/protobuf v1.2.0
 	github.com/google/gofuzz v0.0.0-20170612174753-24818f796faf
 	github.com/googleapis/gnostic v0.0.0-20180519185700-7c663266750e
 	github.com/imdario/mergo v0.0.0-20190123232827-7c29201646fa
@@ -19,12 +19,13 @@ require (
 	golang.org/x/crypto v0.0.0-20190313024323-a1f597ede03a
 	golang.org/x/net v0.0.0-20190313220215-9f648a60d977
 	golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421
+	golang.org/x/sync v0.0.0-20190227155943-e225da77a7e6 // indirect
 	golang.org/x/sys v0.0.0-20190312061237-fead79001313
-	golang.org/x/text v0.0.0-20171214130843-f21a4dfb5e38
+	golang.org/x/text v0.3.1-0.20180807135948-17ff2d5776d2
 	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4
-	google.golang.org/appengine v0.0.0-20181217205903-e9657d882bb8
-	gopkg.in/inf.v0 v0.0.0-20180326172332-d2d2541c53f1
-	gopkg.in/yaml.v2 v2.0.0-20181115110504-51d6538a90f8
+	google.golang.org/appengine v1.4.0
+	gopkg.in/inf.v0 v0.9.1
+	gopkg.in/yaml.v2 v2.2.1
 	k8s.io/api v0.0.0-20190313115550-3c12c96769cc
 	k8s.io/apimachinery v0.0.0-20190313115320-c9defaaddf6f
 	k8s.io/client-go v0.0.0-20190313115909-48376054912d
