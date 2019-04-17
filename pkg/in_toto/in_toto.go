@@ -1,84 +1,41 @@
 package in_toto
 
 import (
-	"fmt"
 	"github.com/in-toto/in-toto-golang/in_toto"
-	"io"
-	"os"
 )
 
-// in_totoClient represent a client for kubesec.io.
-type in_totoClient struct {
+type VerificationSetup struct {
+    TargetType string
+    Name string
+    KeyPath string
+    LayoutPath string
 }
 
-// NewClient returns a new client for kubesec.io.
-func NewClient() *in_totoClient {
-	return &in_totoClient{}
-}
-
-// FIXME: actually return an error
 // ScanDefinition scans the provided resource definition.
-func (kc *in_totoClient) ScanContainer(imageName string) (*inTotoResult, error) {
+func ScanContainer(setup *VerificationSetup, imageName string) (error) {
 
-	result := inTotoResult{
-		Retval: 0,
-		Error:  "success",
-	}
+    linkDir := "./"
 
-	oldWd, err := os.Getwd()
-	if err == nil {
+    var key in_toto.Key
+    if err := key.LoadPublicKey(setup.KeyPath); err != nil {
+        return err
+    }
 
-		err := os.Chdir(imageName)
-		if err != nil {
-			result.Retval = 128
-			result.Error = "Couldn't change directory"
-		}
+    var keyMap = map[string]in_toto.Key{
+        key.KeyId: key,
+    }
 
-		layoutPath := "root.layout"
-		keyPath := "root_key.pub"
-		linkDir := "./"
+    var layout in_toto.Metablock
+    err := layout.Load(setup.LayoutPath)
 
-		var key in_toto.Key
-		if err := key.LoadPublicKey(keyPath); err != nil {
-			result.Retval = 127 // is this return value correct for this error?
-			result.Error = err.Error()
-		}
+    if err != nil {
+        return err
+    }
 
-		var keyMap = map[string]in_toto.Key{
-			key.KeyId: key,
-		}
+    if _, err = in_toto.InTotoVerify(layout, keyMap, linkDir, "toplevel"); err != nil {
+        return err
+    }
 
-		var layout in_toto.Metablock
-		err = layout.Load(layoutPath)
 
-		if err != nil {
-			result.Retval = 128
-			result.Error = "Could not load in-toto layout"
-		}
-
-		if _, err = in_toto.InTotoVerify(layout, keyMap, linkDir, "toplevel"); err != nil {
-			result.Retval = 127
-			result.Error = err.Error()
-		}
-
-		err = os.Chdir(oldWd)
-		if err != nil {
-			result.Retval = 128
-			result.Error = "Couldn't change to old directory"
-		}
-	}
-	return &result, nil
-}
-
-// inTotoResult represents a result returned by kubesec.io.
-type inTotoResult struct {
-	Error  string `json:"error"`
-	Retval int    `json:"score"`
-}
-
-// Dump writes the result in a human-readable format to the specified writer.
-func (r *inTotoResult) Dump(w io.Writer) {
-	io.WriteString(w, "-----------------")
-	io.WriteString(w, fmt.Sprintf("in-toto analysis score: %v", r.Retval))
-	io.WriteString(w, "-----------------")
+	return nil
 }
