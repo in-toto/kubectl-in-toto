@@ -88,8 +88,9 @@ func main() {
             container.ImageID, container.Imagename)
         result := in_toto.ScanContainer(inTotoConfig, container.ImageID)
         if result != nil {
-            fmt.Println(err)
+            fmt.Printf("Error: %v\n", result)
             os.Exit(1)
         }
+        fmt.Println("[result]: Verification successful!")
     }
 }

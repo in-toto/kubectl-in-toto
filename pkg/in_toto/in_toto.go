@@ -18,9 +18,9 @@ func saveImageID(ImageID string) error {
     file, err := os.Create("image_id")
 
     if err != nil {
-        return err 
+        return err
     }
-    
+
     slices := strings.Split(ImageID, "//")
 
     if len(slices) != 2 {
@@ -58,7 +58,7 @@ func ScanContainer(setup *VerificationSetup, imageName string) (error) {
         return err
     }
 
-    if _, err = in_toto.InTotoVerify(layout, keyMap, linkDir, 
+    if _, err = in_toto.InTotoVerify(layout, keyMap, linkDir,
             "toplevel", parameters); err != nil {
         return err
     }
