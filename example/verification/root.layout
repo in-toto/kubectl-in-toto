@@ -2,16 +2,20 @@
  "signatures": [
   {
    "keyid": "646e61f1c8dd638cd54361f7400535b30f75bc778db07ca0c8d2f83b45c7a838",
-   "sig": "343e512b58cb6165605afca52caecfaba358fe810ac8ba9f11e13449e75c22a7db0fdfbb781ebea36e44c726c6f0afc810fde944b658ff4a03cd286e673c367c1ae3424b593967892561306ad22315b19658df82657b03916471cc56be9d8610759105ab72ddb511ddeaa47c735c517196ceb7e3a8921760da142fe9e62982acefd03f56be5937c1c3a0d22d8da276359cc23247c3adfaa6b1834054d6351eeaa8e225efa61384dd6cb729f57827d08459a129259cd1ce7b9624972ce7af54a5e8749f4f9638410afd8ab320cc699c4a710a09ceb18db86a1448b2ccf780df5d648bda729f40c16e8e610dbd525b3b51b2dc885c8c4f41610c1c409e5d94fb881d8272be635469126febf759d92e4c74a0374514b4718b8cb30f070f74f13fcb0ae53747672cd6260ab864c6bf296061a20d69a1d8fcda777d393735385e1f49af227f88899548b550f2e6babecb377ac2b6d60f8760608d38132868a38d8c91ec596c5dc817ca5b5dd911d32b8651bbf4d65183dbe9c43c0bd5583bfb13c346"
+   "sig": "0fc01dc03e0fc36745470ad8391aeb91601e23b4f97373f83c4371c0932c88edc6ac3ecaf3e735e2b99a0d4a7b0f2ef0d0240b52314ecdf649cfd571bdbb4b573b9871412fa0def660b0cf6a2d4e96e14699d679a2cf94a47fd31984236b4bf135f8dc06d45ca6a8180ab4c38150fe5223853805b7f3f18f713cac86f4eaf52237f6069129c0ce2b16ad1cdfbb6472242f877b211b5fa32591ed67c7994c18572a1d99a37b1972fd5658375a494f0b8e763ca73df8d2fa79bb36a511c46f24fa2235a747f4f67b982fa639e16ac00d1e24adc6b9496551b2994e49f87b3d00f9211ef1fbff909b1ca6593b0dd2916dea24cd2598cd4caf4f202d4e0239b71c391d7e334c6e3707f9f63c5e64ecb11214cfc7bb36ab9ef4a6f779309b96f47f3f1902e45a325695079e61168b7130a63d3901406d7494d0953ca7798af7a85987c1f56afee3b96240a2d321b349789ec72ddfacc301c6b17709e2f63400b3b5a6e718fd40760c8f547dadc88570abf02f193e21779b525b1118d6c453c5f4c530"
   }
  ],
  "signed": {
   "_type": "layout",
-  "expires": "2019-05-01T17:46:01Z",
+  "expires": "2019-05-20T17:48:42Z",
   "inspect": [
    {
     "_type": "inspection",
     "expected_materials": [
+     [
+      "REQUIRE",
+      "image_id"
+     ],
      [
       "MATCH",
       "image_id",
@@ -19,6 +23,10 @@
       "PRODUCTS",
       "FROM",
       "build"
+     ],
+     [
+      "DISALLOW",
+      "image_id"
      ]
     ],
     "expected_products": [],
@@ -57,7 +65,12 @@
      "image_id"
     ],
     "expected_materials": [],
-    "expected_products": [],
+    "expected_products": [
+     [
+      "CREATE",
+      "image_id"
+     ]
+    ],
     "name": "build",
     "pubkeys": [
      "f5c8b97adb9fc83ab7ee22ff05dd383957008835ba9294e0c073be7c62cdb44e"

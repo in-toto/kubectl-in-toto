@@ -13,14 +13,17 @@ keyid = layout.add_functionary_key_from_path('functionary.pub')['keyid']
 
 step = l.Step()
 step.name = 'build'
-step.materials = []
-step.products = ['CREATE', 'image_id']
+step.expected_materials = []
+step.expected_products = [['CREATE', 'image_id']]
 step.expected_command = shlex.split('docker build . -t empty --idfile image_id')
 step.pubkeys = [keyid]
 
 inspection = l.Inspection()
 inspection.name = 'verify-image'
-inspection.expected_materials = [['MATCH', 'image_id', 'WITH', 'PRODUCTS', 'FROM', 'build']]
+inspection.expected_materials = [['REQUIRE', 'image_id'],
+                                ['MATCH', 'image_id', 'WITH', 'PRODUCTS', 'FROM', 'build'],
+                                ['DISALLOW', 'image_id']
+                                ]
 inspection.expected_products = []
 inspection.run = shlex.split("echo", "lol")
 
