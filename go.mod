@@ -11,7 +11,7 @@ require (
 	github.com/google/gofuzz v0.0.0-20170612174753-24818f796faf
 	github.com/googleapis/gnostic v0.0.0-20180519185700-7c663266750e
 	github.com/imdario/mergo v0.0.0-20190123232827-7c29201646fa
-	github.com/in-toto/in-toto-golang v0.0.0-20190308224034-e90105ecf0ac
+	github.com/in-toto/in-toto-golang v0.0.0-20190419150149-b7d02a13504f
 	github.com/json-iterator/go v0.0.0-20190306142909-0ff49de124c6
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
 	github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742

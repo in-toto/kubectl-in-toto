@@ -32,7 +32,7 @@ func ScanContainer(setup *VerificationSetup, imageName string) (error) {
         return err
     }
 
-    if _, err = in_toto.InTotoVerify(layout, keyMap, linkDir, "toplevel"); err != nil {
+    if _, err = in_toto.InTotoVerify(layout, keyMap, linkDir, "toplevel", nil); err != nil {
         return err
     }
 
