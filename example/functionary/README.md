@@ -7,7 +7,7 @@ do this without a 700k binary, but oh well). First, you need to compile the
 entrypoint:
 
 ```
-gcc main.c
+gcc --static main.c
 ```
 
 Then build the image and create an in-toto link. To do this easily in minikube
