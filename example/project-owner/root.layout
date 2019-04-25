@@ -1,0 +1,82 @@
+{
+ "signatures": [
+  {
+   "keyid": "646e61f1c8dd638cd54361f7400535b30f75bc778db07ca0c8d2f83b45c7a838",
+   "sig": "0fc01dc03e0fc36745470ad8391aeb91601e23b4f97373f83c4371c0932c88edc6ac3ecaf3e735e2b99a0d4a7b0f2ef0d0240b52314ecdf649cfd571bdbb4b573b9871412fa0def660b0cf6a2d4e96e14699d679a2cf94a47fd31984236b4bf135f8dc06d45ca6a8180ab4c38150fe5223853805b7f3f18f713cac86f4eaf52237f6069129c0ce2b16ad1cdfbb6472242f877b211b5fa32591ed67c7994c18572a1d99a37b1972fd5658375a494f0b8e763ca73df8d2fa79bb36a511c46f24fa2235a747f4f67b982fa639e16ac00d1e24adc6b9496551b2994e49f87b3d00f9211ef1fbff909b1ca6593b0dd2916dea24cd2598cd4caf4f202d4e0239b71c391d7e334c6e3707f9f63c5e64ecb11214cfc7bb36ab9ef4a6f779309b96f47f3f1902e45a325695079e61168b7130a63d3901406d7494d0953ca7798af7a85987c1f56afee3b96240a2d321b349789ec72ddfacc301c6b17709e2f63400b3b5a6e718fd40760c8f547dadc88570abf02f193e21779b525b1118d6c453c5f4c530"
+  }
+ ],
+ "signed": {
+  "_type": "layout",
+  "expires": "2019-05-20T17:48:42Z",
+  "inspect": [
+   {
+    "_type": "inspection",
+    "expected_materials": [
+     [
+      "REQUIRE",
+      "image_id"
+     ],
+     [
+      "MATCH",
+      "image_id",
+      "WITH",
+      "PRODUCTS",
+      "FROM",
+      "build"
+     ],
+     [
+      "DISALLOW",
+      "image_id"
+     ]
+    ],
+    "expected_products": [],
+    "name": "verify-image",
+    "run": [
+     "echo"
+    ]
+   }
+  ],
+  "keys": {
+   "f5c8b97adb9fc83ab7ee22ff05dd383957008835ba9294e0c073be7c62cdb44e": {
+    "keyid": "f5c8b97adb9fc83ab7ee22ff05dd383957008835ba9294e0c073be7c62cdb44e",
+    "keyid_hash_algorithms": [
+     "sha256",
+     "sha512"
+    ],
+    "keytype": "rsa",
+    "keyval": {
+     "private": "",
+     "public": "-----BEGIN PUBLIC KEY-----\nMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAubmV8mklQNCV43cOxVFf\nnx3FZJou4xRc0bEfpEU3Nmo8/FE8aF9iG+Yyxy72dd4EoDhkbxtffR2yX9+UL1r6\nUT3+PDJYvVQH4gNiVFdgWQi6LPkco6Qce05CQsuwCJUyBCE79pY5zw6abHM/EqmI\nzQ1S8AK6RX1b10kUKo/vaKE4AG4HL2L+t2WcSk9jY3ZA92++Bl0Dq2nLQH1GSo82\n73I0ElN3YF/XvaxfIIdjU5DhsZpXATtZnSA1Mg0UDdpZCPPaLzYVC/aUsrvCqe0w\nl4jY6CSjFGb3RBTuHXyYw6OU2IGi19xo0v5k+doALElM90N7v3ayuMRALyGgjxKq\n+mbsMXF8ZfUYNfFWr5WcDMpTNoHxEug5ifV0IBEY6/6JXkHzogzwk1F21dkBBqVL\n+7cE26gcHRNu10m+sX1Ghh8jXJruHCpExyBOjrtDfcyoe6eQUCM4QWibpvPsvqKO\neNbN0K74438nxBcDuT4gj9fcRG3s+XWaoB4ZweHdzux3AgMBAAE=\n-----END PUBLIC KEY-----"
+    },
+    "scheme": "rsassa-pss-sha256"
+   }
+  },
+  "readme": "",
+  "steps": [
+   {
+    "_type": "step",
+    "expected_command": [
+     "docker",
+     "build",
+     ".",
+     "-t",
+     "empty",
+     "--idfile",
+     "image_id"
+    ],
+    "expected_materials": [],
+    "expected_products": [
+     [
+      "CREATE",
+      "image_id"
+     ]
+    ],
+    "name": "build",
+    "pubkeys": [
+     "f5c8b97adb9fc83ab7ee22ff05dd383957008835ba9294e0c073be7c62cdb44e"
+    ],
+    "threshold": 1
+   }
+  ]
+ }
+}

@@ -1,64 +1,68 @@
 package in_toto
 
 import (
-	"fmt"
-	"io"
-	"os"
-	"os/exec"
+	"github.com/in-toto/in-toto-golang/in_toto"
+    "os"
+    "fmt"
+    "strings"
 )
 
-// in_totoClient represent a client for kubesec.io.
-type in_totoClient struct {
+type VerificationSetup struct {
+    TargetType string
+    Name string
+    KeyPath string
+    LayoutPath string
 }
 
-// NewClient returns a new client for kubesec.io.
-func NewClient() *in_totoClient {
-	return &in_totoClient{}
+func saveImageID(ImageID string) error {
+    file, err := os.Create("image_id")
+
+    if err != nil {
+        return err
+    }
+
+    slices := strings.Split(ImageID, "//")
+
+    if len(slices) != 2 {
+        return fmt.Errorf("%v has an unexpected number of slices", slices)
+    }
+
+    file.WriteString(slices[1])
+    file.Close()
+    return nil
 }
 
-// FIXME: actually return an error
 // ScanDefinition scans the provided resource definition.
-func (kc *in_totoClient) ScanContainer(imageName string) (*inTotoResult, error) {
+func ScanContainer(setup *VerificationSetup, imageName string) (error) {
 
-	result := inTotoResult{
-		Retval: 0,
-		Error:  "success",
-	}
+    linkDir := "./"
 
-	oldWd, err := os.Getwd()
-	if err == nil {
+    var key in_toto.Key
+    if err := key.LoadPublicKey(setup.KeyPath); err != nil {
+        return err
+    }
 
-		err := os.Chdir(imageName)
-		if err != nil {
-			result.Retval = 128
-			result.Error = "Couldn't change directory"
-		}
+    var keyMap = map[string]in_toto.Key{
+        key.KeyId: key,
+    }
 
-		cmd := exec.Command("in-toto-verify", "-v", "-k", "root_key.pub", "-l", "root.layout")
-		_, err = cmd.CombinedOutput()
-		if err != nil {
-			result.Retval = 127
-			result.Error = err.Error()
-		}
+    var layout in_toto.Metablock
+    err := layout.Load(setup.LayoutPath)
 
-		err = os.Chdir(oldWd)
-		if err != nil {
-			result.Retval = 128
-			result.Error = "Couldn't change to old directory"
-		}
-	}
-	return &result, nil
-}
+    var parameters = map[string]string {
+        "IMAGE_ID": imageName,
+    }
+    saveImageID(imageName)
 
-// inTotoResult represents a result returned by kubesec.io.
-type inTotoResult struct {
-	Error  string `json:"error"`
-	Retval int    `json:"score"`
-}
+    if err != nil {
+        return err
+    }
 
-// Dump writes the result in a human-readable format to the specified writer.
-func (r *inTotoResult) Dump(w io.Writer) {
-	io.WriteString(w, "-----------------")
-	io.WriteString(w, fmt.Sprintf("in-toto analysis score: %v", r.Retval))
-	io.WriteString(w, "-----------------")
+    if _, err = in_toto.InTotoVerify(layout, keyMap, linkDir,
+            "toplevel", parameters); err != nil {
+        return err
+    }
+
+
+	return nil
 }
